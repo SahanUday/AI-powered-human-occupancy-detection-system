@@ -41,9 +41,3 @@ python train_model.py
 - **Classes**: 2 (binary classification)
 - **Structure**: Organized in separate folders by class
 - **Purpose**: Training data for human detection model
-
-### ⚠️ Important Notes
-- This folder should contain the actual image files after downloading from Kaggle
-- The dataset is not included in the Git repository due to size constraints
-- Make sure to download the dataset before training the model
-- The folder structure must match the expected format for the training script to work properly
