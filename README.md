@@ -1,7 +1,6 @@
 # 🕵️‍♂️ AI-Powered Human Occupancy Detection System
 
 This project is an **AI-powered human occupancy detection system** that integrates an **ESP32-CAM module**, a **TensorFlow-based human detection model**, and **Firebase Realtime Database (RTDB)** for real-time occupancy monitoring. It captures images using the ESP32-CAM, processes them with a trained AI model to detect human presence, and updates the occupancy status in Firebase RTDB.
-
 ---
 
 ## 📌 Overview
@@ -36,6 +35,7 @@ This system is ideal for applications like smart home automation, security monit
 * **Firebase Admin SDK** – For real-time database updates.
 * **ESP32-CAM** – Hardware for image capture.
 * **Requests** – For fetching images from the ESP32-CAM HTTP server.
+* **Python-dotenv** – For secure environment variable management.
 
 > ![Python](https://img.shields.io/badge/python-3670A0?logo=python&logoColor=FFFF00)
 > ![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?logo=tensorflow&logoColor=white)
@@ -68,6 +68,7 @@ This system is ideal for applications like smart home automation, security monit
   * OpenCV: `pip install opencv-python`
   * Requests: `pip install requests`
   * Firebase Admin SDK: `pip install firebase-admin`
+  * Python-dotenv: `pip install python-dotenv`
 * **Firebase Setup**:
   * A Firebase project with Realtime Database enabled.
   * Service account JSON file (e.g., `airvix-ef027-firebase-adminsdk-fbsvc-18f86681a5.json`).
@@ -106,12 +107,30 @@ cd human-occupancy-detection
 pip install -r requirements.txt
 ```
 
-**3. Train the Model** (if not already trained):
+**3. Configure Environment**:
+```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Edit .env with your actual values
+# ESP32_CAM_IP=192.168.1.100
+# FIREBASE_SERVICE_ACCOUNT_FILE=your-firebase-service-account.json
+# etc.
+```
+
+**4. Prepare Dataset**:
+```bash
+# Download the dataset from Kaggle
+# https://www.kaggle.com/datasets/sahanudayanga/person-vs-no-person-dataset
+# Extract to classification_data/ folder
+```
+
+**5. Train the Model** (if not already trained):
 ```bash
 python train_model.py
 ```
 
-**4. Run the Detection Script**:
+**6. Run the Detection Script**:
 ```bash
 python occupancy_detection.py
 ```
@@ -122,14 +141,55 @@ python occupancy_detection.py
 
 ```
 human-occupancy-detection/
-├── classification_data/        # Dataset for training (human/ and no_human/ subfolders)
+├── classification_data/        # Dataset from Kaggle (see classification_data/README.md)
+│   ├── human/                  # Images containing people
+│   ├── no_human/               # Images without people
+│   └── README.md               # Dataset documentation and download instructions
 ├── train_model.py             # Script for training the human detection model
 ├── occupancy_detection.py     # Main script for real-time detection and Firebase updates
 ├── human_classifier.keras     # Trained model file
 ├── requirements.txt           # Python dependencies
+├── .env.example               # Environment variables template
+├── config_template.json       # Template for Firebase service account
+├── .gitignore                 # Git ignore file for security
 ├── README.md                  # Project documentation
-└── <service_account>.json     # Firebase service account JSON file
+└── .env                       # Your actual environment variables (NOT in repo)
 ```
+
+---
+
+## 📊 Dataset Information
+
+This project uses the **Person vs No Person Dataset** from Kaggle:
+
+* **Dataset Link**: [Person vs No Person Dataset](https://www.kaggle.com/datasets/sahanudayanga/person-vs-no-person-dataset)
+* **Dataset Structure**: 
+  * `human/` - Images containing people
+  * `no_human/` - Images without people
+* **Purpose**: Binary classification for human occupancy detection
+* **Usage**: Download and extract to `classification_data/` folder for training
+
+To use the dataset:
+1. Create a Kaggle account and download the dataset
+2. Extract the files to your `classification_data/` directory
+3. Ensure the folder structure matches: `classification_data/human/` and `classification_data/no_human/`
+
+---
+
+## 🔒 Security Best Practices
+
+This project implements several security measures to protect sensitive information:
+
+* 🚫 **No hardcoded credentials** - All sensitive data is in environment variables
+* 📁 **Proper .gitignore** - Prevents accidental commits of sensitive files
+* 📋 **Example .env file** - Shows required configuration without exposing real data
+* 🔑 **Environment variables** - Standard secure configuration method
+* 📖 **Clear documentation** - Instructions for secure setup
+
+**Files that should NEVER be committed:**
+* `.env` - Contains your actual environment variables
+* `*.json` - Firebase service account files
+* Any files with real IP addresses, passwords, or API keys
 
 ---
 
@@ -153,6 +213,7 @@ We welcome contributions to enhance the project, such as:
 * 🖼️ Adding image logging for debugging.
 * 🔧 Supporting multiple ESP32-CAM modules.
 * 🔔 Adding notifications for occupancy changes.
+* 📊 Enhancing the dataset with more diverse images.
 
 Fork the repo, create a feature branch, and submit a pull request!
 
@@ -165,6 +226,7 @@ Fork the repo, create a feature branch, and submit a pull request!
 * 📸 OpenCV – For image processing.
 * 🔥 Firebase Admin SDK – For real-time database updates.
 * 🌐 ESP32-CAM – For image capture.
+* 🔧 Python-dotenv – For secure environment configuration.
 
 ---
 
