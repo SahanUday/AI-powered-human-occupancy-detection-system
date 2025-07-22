@@ -1,6 +1,7 @@
 # 🕵️‍♂️ AI-Powered Human Occupancy Detection System
 
-This project is an **AI-powered human occupancy detection system** that integrates an **ESP32-CAM module**, a **TensorFlow-based human detection model**, and **Firebase Realtime Database (RTDB)** for real-time occupancy monitoring. It captures images using the ESP32-CAM, processes them with a trained AI model to detect human presence, and updates the occupancy status in Firebase RTDB.
+**AI-Powered Human Occupancy Detection System** is an intelligent system that detects human presence using machine learning, real-time image capture, and Firebase integration. Developed in Python, it leverages the ESP32-CAM for image capture, a TensorFlow-based MobileNetV2 model for human detection, and Firebase Realtime Database (RTDB) for real-time occupancy updates. This project is part of a broader system for smart space management, such as the **Smart-AC-Control-System**, which includes features like temperature prediction and automated control. For more details, visit the main repository at [Smart-AC-Control-System](https://github.com/SahanUday/Smart-AC-Control-System.git).
+
 ---
 
 ## 📌 Overview
@@ -45,6 +46,24 @@ This system is ideal for applications like smart home automation, security monit
 
 ---
 
+## 📊 Dataset
+
+The machine learning model was trained on the **Person vs No Person Dataset** from Kaggle:
+
+| Feature         | Description                              |
+|-----------------|------------------------------------------|
+| `image`         | Image captured by ESP32-CAM (224x224)    |
+| `label`         | Binary label (human/no_human)            |
+
+- **Dataset Link**: [Person vs No Person Dataset](https://www.kaggle.com/datasets/sahanudayanga/person-vs-no-person-dataset)
+- **Structure**: 
+  - `human/` - Images containing people
+  - `no_human/` - Images without people
+- **Purpose**: Binary classification for human occupancy detection
+- **Usage**: Download and extract to `classification_data/` folder for training
+
+---
+
 ## ⚙️ How It Works
 
 1. **Image Capture**: The ESP32-CAM captures images and serves them via an HTTP endpoint.
@@ -60,20 +79,10 @@ This system is ideal for applications like smart home automation, security monit
 
 ### ✅ Requirements
 
-* **Hardware**:
-  * ESP32-CAM module with configured firmware for image capture.
-* **Software**:
-  * Python 3.8+
-  * TensorFlow: `pip install tensorflow`
-  * OpenCV: `pip install opencv-python`
-  * Requests: `pip install requests`
-  * Firebase Admin SDK: `pip install firebase-admin`
-  * Python-dotenv: `pip install python-dotenv`
-* **Firebase Setup**:
-  * A Firebase project with Realtime Database enabled.
-  * Service account JSON file (e.g., `airvix-ef027-firebase-adminsdk-fbsvc-18f86681a5.json`).
-* **ESP32-CAM Setup**:
-  * Configured ESP32-CAM with a static IP address (e.g., `192.168.8.144`).
+- Python 3.8+
+- All dependencies listed in `requirements.txt`
+- Firebase Admin SDK credentials
+- Configured ESP32-CAM with a static IP address
 
 ---
 
@@ -98,8 +107,8 @@ This system is ideal for applications like smart home automation, security monit
 
 **1. Clone the Repository**:
 ```bash
-git clone https://github.com/<your-username>/human-occupancy-detection.git
-cd human-occupancy-detection
+git clone https://github.com/SahanUday/AI-powered-human-occupancy-detection-system.git
+cd AI-powered-human-occupancy-detection-system
 ```
 
 **2. Install Dependencies**:
@@ -109,9 +118,6 @@ pip install -r requirements.txt
 
 **3. Configure Environment**:
 ```bash
-# Copy the example environment file
-cp .env.example .env
-
 # Edit .env with your actual values
 # ESP32_CAM_IP=192.168.1.100
 # FIREBASE_SERVICE_ACCOUNT_FILE=your-firebase-service-account.json
@@ -121,9 +127,8 @@ cp .env.example .env
 **4. Prepare Dataset**:
 ```bash
 # Download the dataset from Kaggle
-# https://www.kaggle.com/datasets/sahanudayanga/person-vs-no-person-dataset
-# Extract to classification_data/ folder
 ```
+*Dataset Link*: [Person vs No Person Dataset](https://www.kaggle.com/datasets/sahanudayanga/person-vs-no-person-dataset)
 
 **5. Train the Model** (if not already trained):
 ```bash
@@ -152,44 +157,8 @@ human-occupancy-detection/
 ├── .env.example               # Environment variables template
 ├── config_template.json       # Template for Firebase service account
 ├── .gitignore                 # Git ignore file for security
-├── README.md                  # Project documentation
-└── .env                       # Your actual environment variables (NOT in repo)
+└── README.md                  # Project documentation
 ```
-
----
-
-## 📊 Dataset Information
-
-This project uses the **Person vs No Person Dataset** from Kaggle:
-
-* **Dataset Link**: [Person vs No Person Dataset](https://www.kaggle.com/datasets/sahanudayanga/person-vs-no-person-dataset)
-* **Dataset Structure**: 
-  * `human/` - Images containing people
-  * `no_human/` - Images without people
-* **Purpose**: Binary classification for human occupancy detection
-* **Usage**: Download and extract to `classification_data/` folder for training
-
-To use the dataset:
-1. Create a Kaggle account and download the dataset
-2. Extract the files to your `classification_data/` directory
-3. Ensure the folder structure matches: `classification_data/human/` and `classification_data/no_human/`
-
----
-
-## 🔒 Security Best Practices
-
-This project implements several security measures to protect sensitive information:
-
-* 🚫 **No hardcoded credentials** - All sensitive data is in environment variables
-* 📁 **Proper .gitignore** - Prevents accidental commits of sensitive files
-* 📋 **Example .env file** - Shows required configuration without exposing real data
-* 🔑 **Environment variables** - Standard secure configuration method
-* 📖 **Clear documentation** - Instructions for secure setup
-
-**Files that should NEVER be committed:**
-* `.env` - Contains your actual environment variables
-* `*.json` - Firebase service account files
-* Any files with real IP addresses, passwords, or API keys
 
 ---
 
@@ -232,4 +201,4 @@ Fork the repo, create a feature branch, and submit a pull request!
 
 ## 📜 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
